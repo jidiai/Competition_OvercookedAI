@@ -60,6 +60,12 @@ Finally, run the game by executing:
 python run_log.py
 ```
 
+## Visualization
+
+We provide two visualization method:
+- Console: set `self.render_mode="console"` in `env/overcookedai_integrated.py` and the game map will be displayed as string on the console.
+- Window: set `self.render_mode="window"` and the game map will be displayed in a seperated pygame window.
+
 
 ## Navigation
 

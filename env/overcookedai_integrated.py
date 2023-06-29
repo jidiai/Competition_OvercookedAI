@@ -2,19 +2,66 @@
 
 import copy
 import random
+import time
 
 from env.simulators.game import Game
 from env.obs_interfaces.observation import *
 from overcooked_ai_py.mdp.actions import Action
 from overcooked_ai_py.mdp.overcooked_mdp import OvercookedGridworld
 from overcooked_ai_py.mdp.overcooked_env import OvercookedEnv, DEFAULT_ENV_PARAMS
+from overcooked_ai_py.visualization.state_visualizer import StateVisualizer
 from utils.discrete import Discrete
 # from gym.spaces.discrete import Discrete
 
 import gym
 import numpy as np
+import pygame
 
 __all__ = ['OvercookedAI_Integrated']
+
+GRID1= """XXXPX
+O X P
+O X X
+D X X
+XXXSX"""
+
+GRID2 = """XXXPX
+X   P
+D X X
+O   X
+XOSXX"""
+
+GRID3 = """XXPXX
+O   O
+X   X
+XDXSX"""
+
+
+
+COLORS = {
+    'red': [255,0,0],
+    'light red': [255, 127, 127],
+    'green': [0, 255, 0],
+    'blue': [0, 0, 255],
+    'orange': [255, 127, 0],
+    'grey':  [176,196,222],
+    'purple': [160, 32, 240],
+    'black': [0, 0, 0],
+    'white': [255, 255, 255],
+    'light green': [204, 255, 229],
+    'sky blue': [0,191,255],
+    # 'red-2': [215,80,83],
+    # 'blue-2': [73,141,247]
+}
+
+pygame.init()
+font = pygame.font.Font(None, 18)
+def display_text(info, y = 10, x=10, c='black'):
+    # display_surf = pygame.display.get_surface()
+    debug_surf = font.render(str(info), True, COLORS[c])
+    debug_rect = debug_surf.get_rect(topleft = (x,y))
+    # display_surf.blit(debug_surf, debug_rect)
+    return debug_surf, debug_rect
 
 class OvercookedAI_Integrated(Game, DictObservation):
     def __init__(self, conf):
@@ -45,6 +92,11 @@ class OvercookedAI_Integrated(Game, DictObservation):
         self.action_dim = self.get_action_dim()
         # self.observation_space = self._setup_observation_space()
         self.input_dimension = None
+
+        self.render_mode = 'window'     #'console', 'window' or None
+        if self.render_mode is not None:
+            self.vis = StateVisualizer()
+            self.background = pygame.display.set_mode((375,375))
 
     def reset_map(self):
 
@@ -207,3 +259,33 @@ class OvercookedAI_Integrated(Game, DictObservation):
     def render_in_console(self):
         print(f'Map {6-len(self.game_pool)} t = {self.step_cnt+1}')
         self.env.display_states(self.env.state)
+
+    def render_in_window(self):
+        if self.current_game == 'forced_coordination':
+            grid = GRID1.split('\n')
+        elif self.current_game == 'coordination_ring':
+            grid = GRID2.split('\n')
+        elif self.current_game == 'cramped_room':
+            grid = GRID3.split('\n')
+        else:
+            raise NotImplementedError('Map name error')
+
+        sub_surface = self.vis.render_state(self.env.state, grid)
+        self.background.blit(sub_surface, (0,0))
+
+        surf, text = display_text(f'Step {self.step_cnt}, Map {6-len(self.game_pool)}, Agent idx {self.player2agent_mapping}', x=0, y=0, c='green')
+        self.background.blit(surf, text)
+
+        surf, text = display_text(f"Reward {self.n_return}", x=0, y=15, c='green')
+        self.background.blit(surf, text)
+
+        pygame.display.flip()
+        time.sleep(0.01)
+
+    def render(self):
+        if self.render_mode == 'console':
+            self.render_in_console()
+        elif self.render_mode == 'window':
+            self.render_in_window()
+        else:
+            raise NotImplementedError('Render mode not implemented')
