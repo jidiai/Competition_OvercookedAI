@@ -203,3 +203,7 @@ class OvercookedAI_Integrated(Game, DictObservation):
                 each['new_map'] = new_map
             all_observes.append(each)
         return all_observes
+
+    def render_in_console(self):
+        print(f'Map {6-len(self.game_pool)} t = {self.step_cnt+1}')
+        self.env.display_states(self.env.state)

@@ -39,6 +39,44 @@ The competition adopts an integrated version of [OvercookedAI games](https://git
 - We use the default reward shaping, that is +20 for each successful orders. We will sum up all rewards in all maps as the score for one episode.
 
 
+## Quick Start
+
+You can use any tool to manage your python environment. Here, we use conda as an example.
+
+```bash
+conda create -n overcookai-venv python==3.8  # or 3.9 We have tested for both
+conda activate overcookai-venv
+```
+
+Next, clone the repository and install the necessary dependencies:
+```bash
+git clone https://github.com/jidiai/Competition_OvercookedAI.git
+cd Competition_OvercookedAI
+pip install -r requirements.txt
+```
+
+Finally, run the game by executing:
+```bash
+python run_log.py
+```
+
+
+## Navigation
+
+```
+|-- Competition_OvercookedAI               
+	|-- agents                              // Agents that act in the environment
+	|	|-- random                      // A random agent demo
+	|	|	|-- submission.py       // A ready-to-submit random agent file
+	|-- env		                        // scripts for the environment
+	|	|-- config.py                   // environment configuration file
+	|	|-- overcookedai_integrated.py  // The environment wrapper		      
+	|-- utils               
+	|-- run_log.py		                // run the game with provided agents (same way we evaluate your submission in the backend server)
+```
+
+
+
 ## How to test submission
 
 You can locally test your submission. At Jidi platform, we evaluate your submission as same as *run_log.py*
