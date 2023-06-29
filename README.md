@@ -85,17 +85,23 @@ We provide two visualization method:
 
 ## How to test submission
 
-You can locally test your submission. At Jidi platform, we evaluate your submission as same as *run_log.py*
+- You can train your own agents using any framework you like as long as using the provided environment wrapper. 
 
-For example,
+- For your ready-to-submit agent, make sure you check it using the ``run_log.py`` scrips, which is exactly how we 
+evaluate your submission.
+
+- ``run_log.py`` takes agents from path `agents/` and run a game. For example:
 
 >python run_log.py --my_ai "random" --opponent "random"
 
+set both agents as a random policy and run a game.
 
----
+- You can put your agents in the `agent/` folder and create a `submission.py` with a `my_controller` function 
+in it. Then run the `run_log.py` to test:
 
-## Ready to submit
+>python run_log.py --my_ai your_agent_name --opponent xxx
 
-Random policy --> *agents/random/submission.py*
+- If you pass the test, then you can submit it to the Jidi platform. You can make multiple submission and the previous submission will
+be overwritten.
 
-solve the tasks with any method you like, e.g. rule-based, heuristic, RL, etc.
+
