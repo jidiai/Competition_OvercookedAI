@@ -12,3 +12,4 @@ six==1.16.0
 wincertstore==0.2
 gym==0.22.0
 overcooked-ai==1.1.0
+click
