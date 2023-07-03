@@ -11,5 +11,5 @@ python-dateutil==2.8.2
 six==1.16.0
 wincertstore==0.2
 gym==0.22.0
-overcooked-ai==1.1.0
+overcooked-ai @ git+https://github.com/YanSong97/overcooked_ai.git@99fbf731bf5fe8ca00f4829b1c3e9bde692ea4c3
 click

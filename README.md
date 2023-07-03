@@ -55,12 +55,6 @@ cd Competition_OvercookedAI
 pip install -r requirements.txt
 ```
 
-add a game core patch:
-```bash
-python add_patch.py -f  # #make sure the pot start cooking when full
-```
-
-
 Finally, run the game by executing:
 ```bash
 python run_log.py
