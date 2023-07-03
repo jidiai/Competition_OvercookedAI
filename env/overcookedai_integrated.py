@@ -149,9 +149,7 @@ class OvercookedAI_Integrated(Game, DictObservation):
             self.player_state = [next_state for _ in range(self.n_player)]
             # self.current_state = [next_state for _ in range(self.n_player)]
             self.all_observes = self.get_all_observes()
-        if reward >0:
-            print('reward', reward)
-            raise NotImplementedError
+
 
         self.set_n_return(reward)
         self.step_cnt += 1
