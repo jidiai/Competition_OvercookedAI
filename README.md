@@ -44,7 +44,7 @@ The competition adopts an integrated version of [OvercookedAI games](https://git
 You can use any tool to manage your python environment. Here, we use conda as an example.
 
 ```bash
-conda create -n overcookai-venv python==3.8  # or 3.9 We have tested for both
+conda create -n overcookai-venv python==3.7.5  #3.8, 3.9
 conda activate overcookai-venv
 ```
 
